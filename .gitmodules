@@ -1,0 +1,6 @@
+[submodule "packages/react-canny"]
+	path = packages/react-canny
+	url = git@github.com:kearisp/react-canny.git
+[submodule "packages/kpdux"]
+	path = packages/kpdux
+	url = git@github.com:kearisp/kpdux.git

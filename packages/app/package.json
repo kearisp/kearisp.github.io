@@ -1,0 +1,7 @@
+{
+    "name": "app",
+    "description": "",
+    "scripts": {
+        "start": "echo \"1\""
+    }
+}

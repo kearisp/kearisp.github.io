@@ -1,3 +1,6 @@
+[submodule "packages/kp-admin"]
+	path = packages/kp-admin
+	url = git@github.com:kearisp/kp-admin.git
 [submodule "packages/react-canny"]
 	path = packages/react-canny
 	url = git@github.com:kearisp/react-canny.git

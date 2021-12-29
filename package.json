@@ -18,6 +18,7 @@
         "build:root": "react-scripts build",
         "watch": "concurrently \"npm:watch:*\"",
         "watch:root": "react-scripts start",
+        "watch:kp-admin": "npm run watch --workspace kp-admin",
         "watch:kpdux": "npm run watch --workspace kpdux",
         "watch:react-canny": "npm run watch --workspace react-canny",
         "test": "concurrently \"npm:test:*\"",

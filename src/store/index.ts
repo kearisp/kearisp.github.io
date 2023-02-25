@@ -1,5 +1,3 @@
-import {createStore} from "kpdux";
-
 import {auth, AuthState} from "./modules/auth.module";
 
 
@@ -7,9 +5,10 @@ type State = {
     auth: AuthState;
 };
 
-const store = createStore({
-    auth
-});
+const store = null;
+    // createStore({
+    // auth
+// });
 
 
 export type {State};

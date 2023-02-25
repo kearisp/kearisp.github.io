@@ -22,19 +22,11 @@ const DashboardLayout:React.FC<Props> = (props:Props) => {
             </Grid>
 
             <Grid item>
-                <Grid container>
-                    <Grid item>
-
-                    </Grid>
-
-                    <Grid item>
-                        {children}
-                    </Grid>
-                </Grid>
+                {children}
             </Grid>
         </Grid>
     );
 };
 
 
-export default DashboardLayout;
+export {DashboardLayout};

@@ -32,4 +32,4 @@ const DefaultLayout:React.FC<Props> = (props:Props) => {
 };
 
 
-export default DefaultLayout;
+export {DefaultLayout};

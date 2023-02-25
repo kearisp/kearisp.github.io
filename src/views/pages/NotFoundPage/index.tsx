@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const NotFoundPage:React.FC = () => {
+const NotFoundPage: React.FC = () => {
     return (
         <React.Fragment>
             404
@@ -10,4 +10,4 @@ const NotFoundPage:React.FC = () => {
 };
 
 
-export default NotFoundPage;
+export {NotFoundPage};

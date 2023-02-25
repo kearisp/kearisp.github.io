@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const HomePage:React.FC = () => {
+const HomePage: React.FC = () => {
     return (
         <React.Fragment>
             Home page
@@ -10,4 +10,4 @@ const HomePage:React.FC = () => {
 };
 
 
-export default HomePage;
+export {HomePage};

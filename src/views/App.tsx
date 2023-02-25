@@ -18,7 +18,7 @@ import {
 import {ROUTES} from "src/routing";
 
 
-const App:React.FC = () => {
+const App: React.FC = () => {
     return (
         <Switch>
             <Route exact path={ROUTES.home}>
@@ -41,4 +41,4 @@ const App:React.FC = () => {
 };
 
 
-export default App;
+export {App};

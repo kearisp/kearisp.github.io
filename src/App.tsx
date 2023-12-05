@@ -7,12 +7,14 @@ import {DashboardLayout} from "./layouts";
 import {
     FeedbackPage,
     HomePage,
-    NotFoundPage
+    NotFoundPage,
+    PathBuilderPage
 } from "./pages";
 
 import {ROUTES} from "src/env";
 
 import "./i18n";
+import "./App.scss";
 
 
 const App: React.FC = () => {
@@ -28,10 +30,11 @@ const App: React.FC = () => {
                             </DashboardLayout>
                           }>
                             <Route path={ROUTES.home} element={<HomePage />} />
+                            <Route path={ROUTES.pathBuilder} element={<PathBuilderPage />} />
                             <Route path={ROUTES.feedback} element={<FeedbackPage />} />
                         </Route>
 
-                        <Route element={<NotFoundPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </BrowserRouter>
             </Suspense>

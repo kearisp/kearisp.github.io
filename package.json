@@ -1,6 +1,6 @@
 {
     "name": "kearisp",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Workspace for my node.js projects",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "license": "MIT",
@@ -13,13 +13,12 @@
         "packages/*"
     ],
     "scripts": {
-        "start": "npm run watch",
-        "build": "concurrently \"npm:build:*\"",
-        "build:root": "react-scripts build",
+        "start": "concurrently \"npm:watch\" \"npm:watch:*\"",
+        "build-all": "concurrently \"npm:build\" \"npm:build:*\"",
+        "build": "react-scripts build",
         "build:react-canny": "npm run build --workspace react-canny",
         "postbuild": "cp build/index.html build/404.html",
-        "watch": "concurrently \"npm:watch:*\"",
-        "watch:root": "react-scripts start",
+        "watch": "react-scripts start",
         "watch:react-canny": "npm run watch --workspace react-canny",
         "test": "concurrently \"npm:test:*\""
     },

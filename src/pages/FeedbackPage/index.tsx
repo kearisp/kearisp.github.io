@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import {Grid} from "@mui/material";
+import {Grid, useColorScheme} from "@mui/material";
 
 import {
     CannyProvider,
@@ -18,40 +18,41 @@ const Button: React.FC<any> = (props) => {
 
 
 const FeedbackPage: React.FC = () => {
+    const {mode = "dark"} = useColorScheme();
+
     const handleLoad = useCallback(() => {
         console.log("LOADED!");
     }, []);
 
     return (
-        <React.Fragment>
-            <CannyProvider
-              appId={CANNY_APP_ID}
-              user={{
-                id: "1",
-                name: "Test User",
-                email: "test@test.com"
-              }}>
-                <CannyFeedback
-                  theme="dark"
-                  boardToken={CANNY_BOARD_ID}
-                  onLoadCallback={handleLoad} />
+        <CannyProvider
+          appId={CANNY_APP_ID}
+          subdomain="kearisp"
+          user={{
+            id: "1",
+            name: "Test User",
+            email: "test@test.com"
+          }}>
+            <CannyFeedback
+              theme={["light", "dark"].includes(mode) ? mode as "dark" : "dark"}
+              boardToken={CANNY_BOARD_ID}
+              onLoadCallback={handleLoad} />
 
-                <Grid container justifyContent="center" justifyItems="center">
-                    <Grid item>
-                        <CannyChangelog
-                          component={Button}
-                          type="button"
-                          align="top"
-                          position="right"
-                          labelIDs={[]}>
-                            Change log
-                        </CannyChangelog>
-                    </Grid>
+            <Grid container justifyContent="center" justifyItems="center">
+                <Grid item>
+                    <CannyChangelog
+                      component={Button}
+                      type="button"
+                      align="top"
+                      position="right"
+                      labelIDs={[]}>
+                        Change log
+                    </CannyChangelog>
                 </Grid>
-            </CannyProvider>
-        </React.Fragment>
+            </Grid>
+        </CannyProvider>
     );
 };
 
 
-export {FeedbackPage};
+export default FeedbackPage;

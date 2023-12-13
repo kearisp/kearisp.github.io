@@ -1,6 +1,6 @@
 {
     "name": "kearisp",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Workspace for my node.js projects",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "license": "MIT",
@@ -16,9 +16,11 @@
         "start": "concurrently \"npm:watch\" \"npm:watch:*\"",
         "build-all": "concurrently \"npm:build\" \"npm:build:*\"",
         "build": "react-scripts build",
+        "build:motor-js": "npm run build --workspace motor-js",
         "build:react-canny": "npm run build --workspace react-canny",
         "postbuild": "cp build/index.html build/404.html",
         "watch": "react-scripts start",
+        "watch:motor-js": "npm run watch --workspace motor-js",
         "watch:react-canny": "npm run watch --workspace react-canny",
         "test": "concurrently \"npm:test:*\""
     },
@@ -29,6 +31,7 @@
         "@mui/material": "^5.0.1",
         "@mui/styles": "^5.0.1",
         "i18next-http-backend": "^2.4.2",
+        "motor-js": "file:packages/motor-js",
         "path-browserify": "^1.0.1",
         "react": "^18.2.0",
         "react-canny": "^0.0.4",
@@ -55,7 +58,7 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "react-scripts": "^5.0.1",
         "sass": "^1.39.2",
-        "typescript": "^5.2.2"
+        "typescript": "^5.3.3"
     },
     "overrides": {
         "@mui/icons-material": {

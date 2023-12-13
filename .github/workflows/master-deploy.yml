@@ -26,8 +26,8 @@ jobs:
 
             - name: Build
               env:
-                  REACT_APP_CANNY_APP_ID: ${{ env.REACT_APP_CANNY_APP_ID }}
-                  REACT_APP_CANNY_BOARD_ID: ${{ env.REACT_APP_CANNY_BOARD_ID }}
+                  REACT_APP_CANNY_APP_ID: ${{ vars.REACT_APP_CANNY_APP_ID }}
+                  REACT_APP_CANNY_BOARD_ID: ${{ vars.REACT_APP_CANNY_BOARD_ID }}
               run: npm run build
 
             - name: Deploy to GitHub Pages

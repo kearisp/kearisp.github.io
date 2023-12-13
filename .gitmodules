@@ -4,3 +4,6 @@
 [submodule "packages/react-canny"]
 	path = packages/react-canny
 	url = git@github.com:kearisp/react-canny.git
+[submodule "packages/motor-js"]
+	path = packages/motor-js
+	url = git@github.com:kearisp/motor-js.git

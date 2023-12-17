@@ -4,9 +4,9 @@ import React, {
     useEffect,
     MouseEvent as ReactMouseEvent
 } from "react";
-import {Scene, Point} from "motor-js";
+import {Scene, Cube, Point, rotateX, rotateY} from "motor-js";
 
-import {Block} from "./models";
+// import {Block} from "./models";
 
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
     fov: number;
     position?: Point;
     direction?: Point;
+    angle?: number;
 };
 
 const PathBuilder: React.FC<Props> = (props) => {
@@ -23,25 +24,40 @@ const PathBuilder: React.FC<Props> = (props) => {
         running = true,
         fov,
         position,
-        direction
+        direction,
+        angle = 0
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    const refScene = useRef<Scene>();
+    const sceneRef = useRef<Scene>();
 
     const handleMouseDown = useCallback((e: ReactMouseEvent<HTMLDivElement>) => {
-        if(!refScene.current) {
+        if(!sceneRef.current) {
             return;
         }
 
+        const scene = sceneRef.current;
+
+        // console.log(e);
+        // @ts-ignore
+        // console.log(e.clientX, e.clientY, e.offsetX, e.offsetY);
+        // const offsetX = e.movementX;
         // const startX = e.clientX;
         // const startY = e.clientY;
 
-        const handleMove = (e: MouseEvent) => {};
+        const handleMove = (e: MouseEvent) => {
+            const camera = scene.getCamera();
+            // const direction = camera.getDirection();
+
+            // const newDirection = rotateY(rotateX(direction, e.movementX), e.movementY);
+
+            // console.log(direction, newDirection);
+
+            // camera.setAngle(camera.getAngle() + e.movementX);
+            // camera.setDirection(newDirection);
+        };
 
         const handleUp = (e: MouseEvent) => {
-            // console.log(e);
-
             document.removeEventListener("mousemove", handleMove);
             document.removeEventListener("mouseup", handleUp);
         };
@@ -57,27 +73,30 @@ const PathBuilder: React.FC<Props> = (props) => {
 
         const scene = new Scene(context);
 
-        refScene.current = scene;
+        sceneRef.current = scene;
 
         scene.run(ref.current);
 
-        scene.add(new Block(0, 0));
-        // scene.add(new Block(20, 20));
-        // scene.add(new Block(20, -20));
-        // scene.add(new Block(-20, -20));
+        scene.add(new Cube(100, 100, 100), {x: 0, y: 0, z: -200});
+        // scene.add(new Cube(50, 50, 50), {x: 0, y: 0, z: -200});
+        // scene.add(new Cube(15, 15, 15), {x: -50, y: 0, z: 0});
+        // scene.add(new Cube(15, 15, 15), {x: -25, y: 0, z: 0});
+        // scene.add(new Cube(15, 15, 15), {x: 0, y: 0, z: 0});
+        // scene.add(new Cube(15, 15, 15), {x: 25, y: 0, z: 0});
+        // scene.add(new Cube(15, 15, 15), {x: 50, y: 0, z: 0});
 
         return () => {
-            refScene.current = undefined;
+            sceneRef.current = undefined;
             scene.stop();
         };
     }, [context]);
 
     useEffect(() => {
-        if(!ref.current || !refScene.current) {
+        if(!ref.current || !sceneRef.current) {
             return;
         }
 
-        const scene = refScene.current;
+        const scene = sceneRef.current;
 
         if(running) {
             scene.run(ref.current);
@@ -88,38 +107,38 @@ const PathBuilder: React.FC<Props> = (props) => {
     }, [running]);
 
     useEffect(() => {
-        if(!refScene.current) {
+        if(!sceneRef.current) {
             return;
         }
 
-        const camera = refScene.current.getCamera();
+        const camera = sceneRef.current.getCamera();
 
         camera.setFov(fov);
     }, [fov]);
 
     useEffect(() => {
-        if(!refScene.current) {
+        if(!sceneRef.current || !position) {
             return;
         }
 
-        if(!position) {
-            return;
-        }
-
-        refScene.current.getCamera().setPosition(position);
+        sceneRef.current.getCamera().setPosition(position);
     }, [position]);
 
     useEffect(() => {
-        if(!refScene.current) {
+        if(!sceneRef.current || !direction) {
             return;
         }
 
-        if(!direction) {
-            return;
-        }
-
-        refScene.current.getCamera().setDirection(direction);
+        sceneRef.current.getCamera().setDirection(direction);
     }, [direction]);
+
+    useEffect(() => {
+        if(!sceneRef.current || typeof angle === "undefined") {
+            return;
+        }
+
+        sceneRef.current.getCamera().setAngle(angle);
+    }, [angle]);
 
     return (
         <div

@@ -1,4 +1,4 @@
-import {Model, Polygon, Point} from "motor-js";
+import {Model, Polygon, Point, BSPNode} from "motor-js";
 
 
 export class Lines extends Model {
@@ -27,5 +27,9 @@ export class Lines extends Model {
         this.points.push(end);
 
         this.polygons.push([index, index + 1]);
+    }
+
+    public getPolygons(): number[][] {
+        return this.polygons;
     }
 }

@@ -1,5 +1,21 @@
-import React, {useState, useRef, useContext, useCallback, useEffect, MouseEvent as RMouseEvent} from "react";
-import {Scene, Cube, Polygon, Vector, Point} from "motor-js";
+import React, {
+    useState,
+    useRef,
+    useContext,
+    useCallback,
+    useEffect,
+    MouseEvent as RMouseEvent
+} from "react";
+import {
+    Scene,
+    Cube,
+    Polygon,
+    Vector,
+    BSPNode,
+    CameraPositionChangeEvent,
+    CameraDirectionChangeEvent,
+    CameraFovChangeEvent
+} from "motor-js";
 
 import {ConfigContext} from "../ConfigProvider";
 import {Lines} from "../../models/Lines";
@@ -9,7 +25,7 @@ const PathBuilder: React.FC = () => {
     const [isLocked, setLocked] = useState(false);
     const rootRef = useRef(null);
     const sceneRef = useRef<Scene>();
-    const {isRunning, fov, pitch, yaw, direction} = useContext(ConfigContext);
+    const config = useContext(ConfigContext);
 
     const handleContextMenu = useCallback((e: RMouseEvent) => {
         if(!sceneRef.current) {
@@ -45,47 +61,55 @@ const PathBuilder: React.FC = () => {
             {x: 0, y: 90, z: -10},
             {x: 100, y: -10, z: -10}
         ]);
+        a.setId("a");
 
         const b = new Polygon([
             {x: -10, y: 0, z: -90},
             {x: -10, y: 120, z: 0},
             {x: -10, y: 0, z: 90}
         ]);
+        b.setId("b");
 
-        const intersects = [
-            ...Polygon.intersect(a, b),
-            ...Polygon.intersect(b, a)
-        ];
+        const c = new Polygon([
+            {x: -30, y: 0, z: -20},
+            {x: -20, y: 50, z: 0},
+            {x: -10, y: 0, z: -10}
+        ]);
+        c.setId("c");
 
-        for(let i = 0; i < intersects.length; i++) {
-            const polygon = intersects[i];
-
-            lines.addPolygon(polygon);
-        }
-
-        const aCenter = a.getCenter();
-        const aNormal = Vector.fromPoint(a.getNormal()).multiply(100).add(aCenter);
-
-        lines.addLine(aCenter, aNormal);
-
-        const bCenter = b.getCenter();
-        const bNormal = Vector.fromPoint(b.getNormal()).multiply(100).add(bCenter);
-
-        lines.addLine(bCenter, bNormal);
+        lines.addPolygon(b);
+        lines.addPolygon(a);
+        lines.addPolygon(c);
+        lines.addPolygon(new Polygon([
+            {x: 100, y: -30, z: 100},
+            {x: 100, y: -30, z: -100},
+            {x: -100, y: -30, z: -100},
+            {x: -100, y: -30, z: 100}
+        ]));
 
         // scene.add(new Cube(100, 100, 100), {x: 0, y: 0, z: 0}, "cube");
         // scene.add(new Cube(200, 1, 200), {x: 0, y: -100, z: 0}, "ground");
+        lines.setId("lines");
+
         scene.add(lines);
 
-        // scene.add(new Cube(500, 100, 500), {x: 0, y: 0, z: 0}, "cube");
-        // scene.add(new Cube(1000, 1, 1000), {x: 0, y: -55, z: 0}, "ground");
+        scene.add(new Cube(100, 100, 100), {x: 0, y: 0, z: 0}, "cube");
+        // scene.add(new Cube(200, 1, 200), {x: 0, y: -55, z: 0}, "ground");
+        scene.add(new Cube(1, 400, 400), {x: -120, y: 0, z: 0}, "fance");
 
-        for(let i = -6; i <= 6; i++) {
-            for(let j = -6; j <= 6; j++) {
-                scene.add(new Cube(200, 1, 200), {x: 200 * i, y: -2000, z: 200 * j});
-                scene.add(new Cube(200, 1, 200), {x: 200 * i, y: 2000, z: 200 * j});
-            }
-        }
+        // for(let i = -7; i <= 7; i++) {
+        //     for(let j = -7; j <= 7; j++) {
+        //         scene.add(new Cube(200, 1, 200), {x: 200 * i, y: -2000, z: 200 * j});
+        //         scene.add(new Cube(200, 1, 200), {x: 200 * i, y: 2000, z: 200 * j});
+        //     }
+        // }
+
+        const camera = scene.getCamera();
+
+        camera.setPitch(config.pitch);
+        camera.setYaw(config.yaw);
+        camera.setPosition(config.position);
+        camera.setFov(config.fov)
 
         scene.run(rootRef.current);
 
@@ -317,59 +341,164 @@ const PathBuilder: React.FC = () => {
     }, [isLocked]);
 
     useEffect(() => {
-        if(!rootRef.current || !sceneRef.current) {
-            return;
-        }
-
-        const scene = sceneRef.current;
-
-        if(!isRunning) {
-            scene.stop();
-        }
-        else {
-            scene.run(rootRef.current);
-        }
-    }, [isRunning]);
-
-    useEffect(() => {
         if(!sceneRef.current) {
             return;
         }
 
         const camera = sceneRef.current.getCamera();
 
-        camera.setFov(fov);
-    }, [fov]);
+        const handlePositionChange = (e: CameraPositionChangeEvent) => {
+            const {position} = e;
+
+            config.setPosition(position);
+        };
+
+        const handleChangeDirection = (e: CameraDirectionChangeEvent) => {
+            const {
+                direction,
+                yaw,
+                pitch
+            } = e;
+
+            config.setDirection(direction);
+            config.setPitch(pitch);
+            config.setYaw(yaw);
+        };
+
+        const handleFovChange = (e: CameraFovChangeEvent) => {
+            const {
+                fov
+            } = e;
+
+            config.setFov(fov);
+        };
+
+        // const handlePitchChange = () => {};
+
+        camera.addEventListener("positionChange", handlePositionChange);
+        camera.addEventListener("directionChange", handleChangeDirection);
+        camera.addEventListener("fovChange", handleFovChange);
+        // camera.addEventListener("");
+
+        return () => {
+            camera.removeEventListener("positionChange", handlePositionChange);
+            camera.removeEventListener("directionChange", handleChangeDirection);
+            camera.removeEventListener("fovChange", handleFovChange);
+        };
+    }, [config]);
 
     useEffect(() => {
-        if(!sceneRef.current) {
-            return;
-        }
+        const handleRunningChange = (e) => {
+            if(!rootRef.current || !sceneRef.current) {
+                return;
+            }
 
-        const camera = sceneRef.current.getCamera();
+            const scene = sceneRef.current;
 
-        camera.setPitch(pitch);
-    }, [pitch]);
+            if(!e.data.isRunning) {
+                scene.stop();
+            }
+            else {
+                scene.run(rootRef.current);
+            }
+        };
 
-    useEffect(() => {
-        if(!sceneRef.current) {
-            return;
-        }
+        const handleChangePosition = (e) => {
+            if(!sceneRef.current) {
+                return;
+            }
 
-        const camera = sceneRef.current.getCamera();
+            const camera = sceneRef.current.getCamera();
 
-        camera.setYaw(yaw);
-    }, [yaw]);
+            const {
+                data: {
+                    position
+                }
+            } = e;
 
-    // useEffect(() => {
-    //     if(!sceneRef.current) {
-    //         return;
-    //     }
-    //
-    //     const camera = sceneRef.current.getCamera();
-    //
-    //     camera.setDirection(direction);
-    // }, [direction]);
+            camera.setPosition(position);
+        };
+
+        const handleDirectionChange = (e) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            const camera = sceneRef.current.getCamera();
+
+            const {
+                data: {
+                    direction
+                }
+            } = e;
+
+            camera.setDirection(direction);
+        };
+
+        const handleFovChange = (e) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            const camera = sceneRef.current.getCamera();
+
+            const {
+                data: {
+                    fov
+                }
+            } = e;
+
+            camera.setFov(fov);
+        };
+
+        const handlePitchChange = (e) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            const camera = sceneRef.current.getCamera();
+
+            const {
+                data: {
+                    pitch
+                }
+            } = e;
+
+            camera.setPitch(pitch);
+        };
+
+        const handleYawChange = (e) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            const camera = sceneRef.current.getCamera();
+
+            const {
+                data: {
+                    yaw
+                }
+            } = e;
+
+            camera.setYaw(yaw);
+        };
+
+        config.addEventListener("changeRunning", handleRunningChange);
+        config.addEventListener("changePosition", handleChangePosition);
+        config.addEventListener("changeDirection", handleDirectionChange);
+        config.addEventListener("changeFov", handleFovChange);
+        config.addEventListener("changeYaw", handleYawChange);
+        config.addEventListener("changePitch", handlePitchChange);
+
+        return () => {
+            config.removeEventListener("changeRunning", handleRunningChange);
+            config.removeEventListener("changePosition", handleChangePosition);
+            config.removeEventListener("changeDirection", handleDirectionChange);
+            config.removeEventListener("changeFov", handleFovChange);
+            config.removeEventListener("changeYaw", handleYawChange);
+            config.removeEventListener("changePitch", handlePitchChange);
+        };
+    }, [config]);
 
     return (
         <div

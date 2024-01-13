@@ -4,7 +4,8 @@ import {
 } from "react-hook-form";
 
 
-type Props = {
+type Props<P = unknown> = P & {
+    label?: string;
     required?: boolean;
     name: string;
 };

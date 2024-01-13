@@ -2,8 +2,8 @@ import {Model, Polygon, Point, BSPNode} from "motor-js";
 
 
 export class Lines extends Model {
-    constructor() {
-        super();
+    constructor(position?: Point) {
+        super(position);
 
         this.points = [];
         this.polygons = [];

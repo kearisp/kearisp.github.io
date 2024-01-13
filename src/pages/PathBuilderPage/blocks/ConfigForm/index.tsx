@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 
 import {
+    ButtonGroupControl,
     SliderControl,
     SwitchControl
 } from "src/controls";
@@ -10,6 +11,17 @@ import {
 const ConfigForm: React.FC = () => {
     return (
         <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <ButtonGroupControl
+                  label="Context"
+                  options={[
+                    {label: "SVG", value: "svg"},
+                    {label: "Canvas", value: "canvas"},
+                    {label: "WebGL", value: "webgl"}
+                  ]}
+                  name="context" />
+            </Grid>
+
             <Grid item xs={12}>
                 <SwitchControl
                   name="isRunning" />

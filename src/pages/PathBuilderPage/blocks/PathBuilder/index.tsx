@@ -10,8 +10,6 @@ import {
     Scene,
     Cube,
     Polygon,
-    Vector,
-    BSPNode,
     CameraPositionChangeEvent,
     CameraDirectionChangeEvent,
     CameraFovChangeEvent
@@ -27,18 +25,6 @@ const PathBuilder: React.FC = () => {
     const sceneRef = useRef<Scene>();
     const config = useContext(ConfigContext);
 
-    const handleContextMenu = useCallback((e: RMouseEvent) => {
-        if(!sceneRef.current) {
-            return;
-        }
-
-        const scene = sceneRef.current;
-        scene.getCamera().activateDebug();
-
-        e.preventDefault();
-        e.stopPropagation();
-    }, []);
-
     const handleClick = useCallback(() => {
         if(!sceneRef.current) {
             return;
@@ -47,14 +33,36 @@ const PathBuilder: React.FC = () => {
         sceneRef.current.requestPointerLock();
     }, []);
 
+    const handleContextMenu = useCallback((e: RMouseEvent) => {
+        const scene = sceneRef.current;
+
+        if(!scene) {
+            return;
+        }
+
+        console.clear();
+        scene.debug();
+
+        e.preventDefault();
+        e.stopPropagation();
+    }, []);
+
     useEffect(() => {
         if(!rootRef.current) {
             return;
         }
 
-        const scene = sceneRef.current = new Scene("canvas");
+        const scene = sceneRef.current = new Scene(config.context);
+        (window as any).scene = scene;
+        (window as any).context = scene.getContext();
+        const camera = scene.getCamera();
 
-        const lines = new Lines();
+        camera.setPitch(config.pitch);
+        camera.setYaw(config.yaw);
+        camera.setPosition(config.position);
+        camera.setFov(config.fov);
+
+        const lines = new Lines({x: 0, y: 0, z: 0});
 
         const a = new Polygon([
             {x: -100, y: -10, z: -10},
@@ -104,19 +112,12 @@ const PathBuilder: React.FC = () => {
         //     }
         // }
 
-        const camera = scene.getCamera();
-
-        camera.setPitch(config.pitch);
-        camera.setYaw(config.yaw);
-        camera.setPosition(config.position);
-        camera.setFov(config.fov)
-
         scene.run(rootRef.current);
 
         return () => {
             scene.stop();
         };
-    }, []);
+    }, [config.context]);
 
     useEffect(() => {
         const handleLockChange = () => {
@@ -125,10 +126,58 @@ const PathBuilder: React.FC = () => {
             setLocked(locked);
         };
 
+        const handleF = (e: KeyboardEvent) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            if(e.key !== "f") {
+                return;
+            }
+
+            console.clear();
+            sceneRef.current.debug();
+
+            e.preventDefault();
+        };
+
+        const handleChangeContext = (e: KeyboardEvent) => {
+            if(!sceneRef.current) {
+                return;
+            }
+
+            if(!e.altKey) {
+                return;
+            }
+
+            switch(e.key) {
+                case "1":
+                    config.setContext("svg");
+                    break;
+
+                case "2":
+                    config.setContext("canvas");
+                    break;
+
+                case "3":
+                    config.setContext("webgl");
+                    break;
+
+                default:
+                    return;
+            }
+
+            e.preventDefault();
+        };
+
         document.addEventListener("pointerlockchange", handleLockChange);
+        document.addEventListener("keydown", handleF);
+        document.addEventListener("keydown", handleChangeContext);
 
         return () => {
             document.removeEventListener("pointerlockchange", handleLockChange);
+            document.removeEventListener("keydown", handleF);
+            document.removeEventListener("keydown", handleChangeContext);
         };
     }, []);
 
@@ -184,9 +233,9 @@ const PathBuilder: React.FC = () => {
                         const camera = scene.getCamera();
 
                         camera.setPosition({
-                            x: camera.getPosition().x + camera.getDirection().x,
-                            y: camera.getPosition().y + camera.getDirection().y,
-                            z: camera.getPosition().z + camera.getDirection().z
+                            x: camera.getPosition().x - camera.getDirection().x,
+                            y: camera.getPosition().y - camera.getDirection().y,
+                            z: camera.getPosition().z - camera.getDirection().z
                         });
                     }, 0);
 
@@ -232,9 +281,9 @@ const PathBuilder: React.FC = () => {
                         const camera = scene.getCamera();
 
                         camera.setPosition({
-                            x: camera.getPosition().x - camera.getDirection().x,
-                            y: camera.getPosition().y - camera.getDirection().y,
-                            z: camera.getPosition().z - camera.getDirection().z
+                            x: camera.getPosition().x + camera.getDirection().x,
+                            y: camera.getPosition().y + camera.getDirection().y,
+                            z: camera.getPosition().z + camera.getDirection().z
                         });
                     }, 0);
 
@@ -328,8 +377,8 @@ const PathBuilder: React.FC = () => {
             const camera = sceneRef.current.getCamera();
 
             camera.setDirectionFromAngles(
-                camera.getPitch() - e.movementY * 0.1,
-                camera.getYaw() + e.movementX * 0.1
+                camera.getPitch() + e.movementY * 0.1,
+                camera.getYaw() - e.movementX * 0.1
             );
         };
 

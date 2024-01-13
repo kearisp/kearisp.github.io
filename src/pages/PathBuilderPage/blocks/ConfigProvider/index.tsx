@@ -15,6 +15,7 @@ import {ConfigForm} from "../ConfigForm";
 
 
 type EventMap = {
+    changeContext: {data: Data;};
     changeRunning: {data: Data;};
     changeFov: {data: Data;};
     changePitch: {data: Data;};
@@ -24,6 +25,7 @@ type EventMap = {
 };
 
 type Data = {
+    context: "svg" | "canvas" | "webgl";
     isRunning: boolean;
     fov: number;
     pitch: number;
@@ -32,24 +34,21 @@ type Data = {
     direction: Point;
 };
 
-type ContextType = {
-    isRunning: boolean;
+type ContextType = Data & {
     setRunning: (isRunning: boolean) => void,
-    fov: number;
     setFov: (fov: number) => void;
-    pitch: number;
     setPitch: (pitch: number) => void;
-    yaw: number;
     setYaw: (yaw: number) => void;
-    direction: Point;
     setDirection: (direction: Point) => void;
-    position: Point;
     setPosition: (position: Point) => void;
+    setContext: (context: Data["context"]) => void;
     addEventListener: Observable<EventMap>["addEventListener"];
     removeEventListener: Observable<EventMap>["removeEventListener"];
 };
 
 const Context = createContext<ContextType>({
+    context: "webgl",
+    setContext() {},
     isRunning: false,
     setRunning() {},
     fov: 100,
@@ -73,14 +72,14 @@ const ConfigProvider: React.FC<Props> = (props) => {
 
     const [isOpen, setOpen] = useState(false);
     const [isRunning, setRunning] = useState(true);
-    const [fov, setFov] = useState(100);
+    const [context, setContext] = useState<"svg"|"canvas"|"webgl">("canvas");
+    const [fov, setFov] = useState(45);
     const [pitch, setPitch] = useState(0);
     const [yaw, setYaw] = useState(0);
-    const [position, setPosition] = useState<Point>({x: 0, y: 0, z: 0});
-    const [direction, setDirection] = useState<Point>({x: 0, y: 0, z: 1});
+    const [position, setPosition] = useState<Point>({x: 0, y: 0, z: 300});
+    const [direction, setDirection] = useState<Point>({x: 0, y: 0, z: -1});
     const observer = useRef<Observable<EventMap>>(new Observable<EventMap>());
     const formRef = useRef<FormElement>(null);
-    (window as any).form = formRef;
 
     const handleClose = useCallback(() => {
         setOpen(false);
@@ -107,6 +106,11 @@ const ConfigProvider: React.FC<Props> = (props) => {
     }, []);
 
     const handleSubmit = useCallback((data: Data) => {
+        if(handleDiff(context, data.context)) {
+            setContext(data.context);
+            observer.current.emit("changeContext", {data});
+        }
+
         if(handleDiff(isRunning, data.isRunning)) {
             setRunning(data.isRunning);
             observer.current.emit("changeRunning", {data});
@@ -136,7 +140,7 @@ const ConfigProvider: React.FC<Props> = (props) => {
             setYaw(data.yaw);
             observer.current.emit("changeYaw", {data});
         }
-    }, [position, direction, fov, pitch, yaw, pitch]);
+    }, [context, position, direction, fov, pitch, yaw, pitch]);
 
     useEffect(() => {
         const handleKeydown = (e: KeyboardEvent) => {
@@ -156,6 +160,8 @@ const ConfigProvider: React.FC<Props> = (props) => {
     return (
         <Context.Provider
           value={{
+            context,
+            setContext,
             isRunning,
             setRunning,
             fov,
@@ -188,6 +194,7 @@ const ConfigProvider: React.FC<Props> = (props) => {
                   ref={formRef}
                   mode="onSubmit"
                   values={{
+                    context,
                     isRunning,
                     fov,
                     pitch,

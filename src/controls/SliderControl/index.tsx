@@ -5,13 +5,13 @@ import Slider, {SliderProps} from "@mui/material/Slider";
 import {useControl, ControlProps} from "src/hooks";
 
 
-type Props = ControlProps & {
+type Props = ControlProps<{
     label?: SliderProps["title"];
     marks?: SliderProps["marks"];
     min?: SliderProps["min"];
     max?: SliderProps["max"];
     step?: SliderProps["step"];
-};
+}>;
 
 const SliderControl: React.FC<Props> = (props) => {
     const {

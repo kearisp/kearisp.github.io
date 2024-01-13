@@ -55,6 +55,7 @@ const PathBuilder: React.FC = () => {
         const scene = sceneRef.current = new Scene(config.context);
         (window as any).scene = scene;
         (window as any).context = scene.getContext();
+        (window as any).camera = scene.getCamera();
         const camera = scene.getCamera();
 
         camera.setPitch(config.pitch);
@@ -85,25 +86,34 @@ const PathBuilder: React.FC = () => {
         ]);
         c.setId("c");
 
-        lines.addPolygon(b);
-        lines.addPolygon(a);
-        lines.addPolygon(c);
+        // lines.addPolygon(b);
+        // lines.addPolygon(a);
+        // lines.addPolygon(c);
+        // lines.addPolygon(new Polygon([
+        //     {x: 100, y: -30, z: 100},
+        //     {x: 100, y: -30, z: -100},
+        //     {x: -100, y: -30, z: -100},
+        //     {x: -100, y: -30, z: 100}
+        // ]));
         lines.addPolygon(new Polygon([
-            {x: 100, y: -30, z: 100},
-            {x: 100, y: -30, z: -100},
-            {x: -100, y: -30, z: -100},
-            {x: -100, y: -30, z: 100}
+            {x: -100, y: 100, z: 0},
+            {x: 0, y: 0, z: 0},
+            {x: 100, y: 100, z: 0},
+            {x: 100, y: -100, z: 0},
+            {x: -100, y: -100, z: 0}
         ]));
 
         // scene.add(new Cube(100, 100, 100), {x: 0, y: 0, z: 0}, "cube");
         // scene.add(new Cube(200, 1, 200), {x: 0, y: -100, z: 0}, "ground");
         lines.setId("lines");
 
-        scene.add(lines);
+        // scene.add(lines);
 
         scene.add(new Cube(100, 100, 100), {x: 0, y: 0, z: 0}, "cube");
         // scene.add(new Cube(200, 1, 200), {x: 0, y: -55, z: 0}, "ground");
-        scene.add(new Cube(1, 400, 400), {x: -120, y: 0, z: 0}, "fance");
+        // scene.add(new Cube(1, 400, 400), {x: -120, y: 0, z: 0}, "fance");
+
+        // scene.add(new Cube(1000, 1000, 1000), {x: 0, y: 0, z: 0}, "cube");
 
         // for(let i = -7; i <= 7; i++) {
         //     for(let j = -7; j <= 7; j++) {

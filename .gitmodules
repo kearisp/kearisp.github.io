@@ -7,3 +7,6 @@
 [submodule "packages/motor-js"]
 	path = packages/motor-js
 	url = git@github.com:kearisp/motor-js.git
+[submodule "packages/fodec"]
+	path = packages/fodec
+	url = git@github.com:kearisp/fodec.git

@@ -6,6 +6,7 @@ import {ThemeProvider} from "./providers";
 import {DashboardLayout} from "./layouts";
 import {
     FeedbackPage,
+    FodecPage,
     HomePage,
     NotFoundPage,
     PathBuilderPage
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                             </DashboardLayout>
                           }>
                             <Route path={ROUTES.home} element={<HomePage />} />
+                            <Route path={ROUTES.fodec} element={<FodecPage />} />
                             <Route path={ROUTES.pathBuilder} element={<PathBuilderPage />} />
                             <Route path={ROUTES.feedback} element={<FeedbackPage />} />
                         </Route>

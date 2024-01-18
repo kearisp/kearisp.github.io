@@ -13,6 +13,9 @@
 
 # production
 /build
+/src/fodec
+/public/locales/*/fodec.json
+/fodec.key
 
 # misc
 .DS_Store

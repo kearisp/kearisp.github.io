@@ -1,0 +1,28 @@
+{
+    "basePath": "./src/fonts",
+    "output": {
+        "path": "./src/fodec"
+    },
+    "alphabets": [
+        "latin",
+        "cyrillic"
+    ],
+    "resources": [
+        {
+            "type": "font",
+            "name": "Roboto",
+            "format": "TrueType",
+            "path": "roboto/Roboto-Regular.ttf"
+        },
+        {
+            "type": "json",
+            "path": "./../i18n/locales/en/fodec.json",
+            "output": "./../../public/locales/en/fodec.json"
+        },
+        {
+            "type": "json",
+            "path": "./../i18n/locales/ua/fodec.json",
+            "output": "./../../public/locales/ua/fodec.json"
+        }
+    ]
+}

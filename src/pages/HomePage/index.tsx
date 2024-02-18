@@ -11,6 +11,7 @@ const HomePage: React.FC = () => {
         "@wocker/utils",
         "@wocker/mariadb-plugin",
         "@wocker/serveo-plugin",
+        "@wocker/cron-plugin",
         "fodec"
     ]);
 

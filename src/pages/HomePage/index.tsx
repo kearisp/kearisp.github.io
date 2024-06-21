@@ -7,6 +7,7 @@ const HomePage: React.FC = () => {
         "react-canny",
         "@kearisp/cli",
         "@wocker/ws",
+        "@wocker/cron",
         "@wocker/core",
         "@wocker/utils",
         "@wocker/mariadb-plugin",

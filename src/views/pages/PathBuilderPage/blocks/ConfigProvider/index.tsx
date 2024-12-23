@@ -10,7 +10,7 @@ import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import {Point, Observable} from "motor-js";
 
-import {Form, FormElement} from "src/blocks";
+import {Form, FormElement} from "src/views/blocks";
 import {ConfigForm} from "../ConfigForm";
 
 

@@ -5,7 +5,7 @@ import {
     ButtonGroupControl,
     SliderControl,
     SwitchControl
-} from "src/controls";
+} from "src/views/controls";
 
 
 const ConfigForm: React.FC = () => {

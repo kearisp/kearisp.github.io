@@ -53,6 +53,7 @@ const Header: React.FC = () => {
                 {HEADER_MENU.map((route, index:number) => {
                     const {
                         label,
+                        target,
                         to
                     } = route;
 
@@ -62,6 +63,7 @@ const Header: React.FC = () => {
                           component={Link}
                           variant="text"
                           color="inherit"
+                          target={target}
                           to={to}>
                             {t(label)}
                         </Button>

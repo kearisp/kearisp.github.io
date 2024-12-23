@@ -192,12 +192,12 @@ const PathBuilder: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        let forwardInterval: NodeJS.Timeout;
-        let backInterval: NodeJS.Timeout;
-        let leftInterval: NodeJS.Timeout;
-        let rightInterval: NodeJS.Timeout;
-        let upInterval: NodeJS.Timeout;
-        let downInterval: NodeJS.Timeout;
+        let forwardInterval: NodeJS.Timeout,
+            backInterval: NodeJS.Timeout,
+            leftInterval: NodeJS.Timeout,
+            rightInterval: NodeJS.Timeout,
+            upInterval: NodeJS.Timeout,
+            downInterval: NodeJS.Timeout;
 
         const handleDown = (e: KeyboardEvent) => {
             if(!sceneRef.current) {

@@ -8,13 +8,13 @@ import {
     FeedbackPage,
     FodecPage,
     HomePage,
+    MapPage,
     NotFoundPage,
     PathBuilderPage
 } from "./pages";
 
 import {ROUTES} from "src/env";
 
-import "./i18n";
 import "./App.scss";
 
 
@@ -31,6 +31,7 @@ const App: React.FC = () => {
                             </DashboardLayout>
                           }>
                             <Route path={ROUTES.home} element={<HomePage />} />
+                            <Route path={ROUTES.map} element={<MapPage />} />
                             <Route path={ROUTES.fodec} element={<FodecPage />} />
                             <Route path={ROUTES.pathBuilder} element={<PathBuilderPage />} />
                             <Route path={ROUTES.feedback} element={<FeedbackPage />} />

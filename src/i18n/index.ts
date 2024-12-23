@@ -9,7 +9,7 @@ import {PUBLIC_PATH} from "../env";
 i18n.use(Backend).use(initReactI18next).init({
     lng: localStorage.getItem("lang") || "ua",
     fallbackLng: "en",
-    debug: true,
+    debug: false,
     backend: {
         loadPath: Path.join(PUBLIC_PATH, "/locales/{{lng}}/{{ns}}.json")
     },

@@ -1,7 +1,9 @@
 {
     "menu": {
+        "wocker": "Wocker",
         "fodec": "Fodec",
         "feedback": "Feedback",
+        "map": "Map",
         "path-builder": "Path builder"
     }
 }

@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/191.9fb605d5.chunk.css","mappings":"AAAA,WACI,yBACA,iFAIA","sources":["pages/FodecPage/index.scss"],"sourcesContent":["@font-face {\n    font-family: \"Roboto-Fodec\";\n    src: url(\"../../fodec/roboto/Roboto-Regular.ttf\") format(\"truetype\");\n}\n\n.fodec {\n    font-family: \"Roboto-Fodec\";\n}\n"],"names":[],"sourceRoot":""}

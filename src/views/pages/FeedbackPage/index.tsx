@@ -5,7 +5,6 @@ import {
     CannyFeedback,
     CannyChangelog
 } from "react-canny";
-
 import {CANNY_APP_ID, CANNY_BOARD_ID} from "src/env";
 import {AuthButton} from "./blocks/AuthButton";
 

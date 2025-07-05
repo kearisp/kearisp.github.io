@@ -52,6 +52,7 @@ jobs:
                 REACT_APP_CANNY_BOARD_ID: ${{ vars.REACT_APP_CANNY_BOARD_ID }}
             run: |
                 npm run fodec:build
+                npm run build --workspace react-canny
                 npm run build
 
           - name: Setup Pages

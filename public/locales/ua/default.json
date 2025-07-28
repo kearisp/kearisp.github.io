@@ -1,0 +1,13 @@
+{
+    "menu": {
+        "wocker": "Wocker",
+        "fodec": "Fodec",
+        "feedback": "Зворотній зв'язок",
+        "map": "Карта",
+        "path-builder": "Path builder"
+    },
+    "language": {
+        "ua": "Українська",
+        "en": "Англійська"
+    }
+}

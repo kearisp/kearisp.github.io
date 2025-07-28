@@ -23,8 +23,10 @@ const AuthButton: React.FC = () => {
     }
 
     return (
-        <a href={url}>
-             Auth
+        <a
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 h-9 text-sm font-medium text-secondary-foreground bg-secondary hover:bg-secondary/80 transition-colors"
+          href={url}>
+            Auth
         </a>
     );
 };

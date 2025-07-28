@@ -6,10 +6,7 @@ import React, {
     createContext,
     PropsWithChildren
 } from "react";
-import Drawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
 import {Point, Observable} from "motor-js";
-
 import {Form, FormElement} from "src/views/blocks";
 import {ConfigForm} from "../ConfigForm";
 
@@ -148,6 +145,9 @@ const ConfigProvider: React.FC<Props> = (props) => {
                 setOpen((open) => !open);
                 e.preventDefault();
             }
+            else if(e.key === "Escape") {
+                setOpen(false);
+            }
         };
 
         document.addEventListener("keydown", handleKeydown);
@@ -177,38 +177,32 @@ const ConfigProvider: React.FC<Props> = (props) => {
             addEventListener: handleAddEventListener,
             removeEventListener: handleRemoveEventListener
           }}>
-            <Drawer
-              sx={{
-                width: "50vw"
-              }}
-              PaperProps={{
-                sx: {
-                    width: "50vw",
-                    padding: 2
-                }
-              }}
-              open={isOpen}
-              anchor="right"
-              onClose={handleClose}>
-                <Form
-                  ref={formRef}
-                  mode="onSubmit"
-                  values={{
-                    context,
-                    isRunning,
-                    fov,
-                    pitch,
-                    yaw,
-                    position,
-                    direction
-                  }}
-                  shouldUnregister
-                  onChange={handleSubmit}>
-                    <Box sx={{paddingLeft: 2, paddingRight: 2}}>
-                        <ConfigForm />
-                    </Box>
-                </Form>
-            </Drawer>
+            {isOpen && (
+                <div className="fixed inset-0 z-40 flex justify-end">
+                    <div
+                      className="absolute inset-0 bg-black/50"
+                      onClick={handleClose} />
+
+                    <div className="relative w-[50vw] h-full bg-background border-l border-border p-4 overflow-y-auto">
+                        <Form
+                          ref={formRef}
+                          mode="onSubmit"
+                          values={{
+                            context,
+                            isRunning,
+                            fov,
+                            pitch,
+                            yaw,
+                            position,
+                            direction
+                          }}
+                          shouldUnregister
+                          onChange={handleSubmit}>
+                            <ConfigForm />
+                        </Form>
+                    </div>
+                </div>
+            )}
 
             {children}
         </Context.Provider>

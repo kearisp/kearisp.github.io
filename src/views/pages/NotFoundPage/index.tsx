@@ -1,18 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {Router} from "src/env";
 
-import {ROUTES} from "src/env";
 
-
-const NotFoundPage: React.FC = () => {
+export const NotFoundPage: React.FC = () => {
     return (
         <React.Fragment>
             404
 
-            <Link to={ROUTES.home}>Home</Link>
+            <Link to={Router.url("home")}>Home</Link>
         </React.Fragment>
     );
 };
-
-
-export {NotFoundPage};

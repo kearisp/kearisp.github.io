@@ -1,80 +1,31 @@
-import React from "react";
+import React, {PropsWithChildren} from "react";
 import {Link} from "react-router-dom";
-import {useTranslation} from "react-i18next";
-import {
-    Grid,
-    AppBar,
-    Toolbar,
-    IconButton,
-    Icon,
-    Button,
-    Divider,
-    Typography
-} from "@mui/material";
-import {Menu as MenuIcon} from "@mui/icons-material";
-
-import {ROUTES, HEADER_MENU} from "src/env";
-
-import {ThemeToggle} from "../ThemeToggle";
+import {Router} from "src/env";
 
 
-const Header: React.FC = () => {
-    const {t} = useTranslation();
+type HeaderProps = PropsWithChildren<{
+    className?: string;
+}>;
+
+export const Header: React.FC<HeaderProps> = (props) => {
+    const {
+        className = "",
+        children
+    } = props;
 
     return (
-        <AppBar position="relative" color="transparent">
-            <Toolbar variant="dense">
-                <IconButton
-                  size="medium">
-                    <Icon
-                      component={MenuIcon} />
-                </IconButton>
+        <header className={`${className} fixed top-0 left-0 right-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 h-16 flex items-center px-4 transition-all`}>
+            <div className="flex items-center justify-between w-full">
+                <div className="flex items-center gap-4">
+                    <Link className="flex items-center gap-2" to={Router.url("home")}>
+                        <span className="font-bold text-xl text-slate-800 dark:text-white">kearisp</span>
+                    </Link>
+                </div>
 
-                <Typography
-                  sx={{
-                    flexGrow: 1,
-                    display: {
-                        xs: "none",
-                        sm: "block"
-                    },
-                    mr: 2,
-                    fontWeight: 700,
-                    color: "inherit",
-                    textDecoration: "none"
-                  }}
-                  component={Link}
-                  variant="h6"
-                  to={ROUTES.home}>
-                    kearisp
-                </Typography>
-
-                <Grid sx={{flex: 1}} />
-
-                {HEADER_MENU.map((route, index:number) => {
-                    const {
-                        label,
-                        target,
-                        to
-                    } = route;
-
-                    return (
-                        <Button
-                          key={index}
-                          component={Link}
-                          variant="text"
-                          color="inherit"
-                          target={target}
-                          to={to}>
-                            {t(label)}
-                        </Button>
-                    );
-                })}
-
-                <ThemeToggle />
-            </Toolbar>
-        </AppBar>
+                <div className="flex items-center gap-4">
+                    {children}
+                </div>
+            </div>
+        </header>
     );
 };
-
-
-export {Header};

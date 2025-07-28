@@ -1,23 +1,18 @@
 import React, {useCallback} from "react";
-import {Grid, useColorScheme} from "@mui/material";
 import {
     CannyProvider,
     CannyFeedback,
     CannyChangelog
 } from "react-canny";
+import {useTheme} from "src/hooks/useTheme";
+import {Container} from "src/views/blocks/Container";
+import {Button} from "src/views/blocks/Button";
 import {CANNY_APP_ID, CANNY_BOARD_ID} from "src/env";
 import {AuthButton} from "./blocks/AuthButton";
 
 
-const Button: React.FC<any> = (props) => {
-    return (
-        <button {...props} />
-    );
-};
-
-
 const FeedbackPage: React.FC = () => {
-    const {mode = "dark"} = useColorScheme();
+    const {theme} = useTheme();
 
     const handleIdentity = useCallback(() => {
         console.log("Identity!");
@@ -37,27 +32,25 @@ const FeedbackPage: React.FC = () => {
             email: "test@test.com"
           }}
           onIdentify={handleIdentity}>
-            <CannyFeedback
-              theme={["light", "dark"].includes(mode) ? mode as "dark" : "dark"}
-              boardToken={CANNY_BOARD_ID}
-              onLoadCallback={handleLoad} />
-
-            <Grid container justifyContent="center" justifyItems="center">
-                <Grid item>
+            <Container className="flex flex-col gap-6 py-6">
+                <div className="flex items-center justify-center gap-4">
                     <CannyChangelog
                       component={Button}
-                      type="button"
+                      variant="outline"
                       align="top"
                       position="right"
                       labelIDs={[]}>
                         Change log
                     </CannyChangelog>
-                </Grid>
 
-                <Grid item>
                     <AuthButton />
-                </Grid>
-            </Grid>
+                </div>
+
+                <CannyFeedback
+                  theme={theme}
+                  boardToken={CANNY_BOARD_ID}
+                  onLoadCallback={handleLoad} />
+            </Container>
         </CannyProvider>
     );
 };

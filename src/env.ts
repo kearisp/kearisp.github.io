@@ -1,37 +1,35 @@
+import {createNavigator} from "navigation-kit";
 import {MenuItem} from "./types";
 
 
 export const PUBLIC_PATH = "/";
-export const CANNY_APP_ID = process.env.REACT_APP_CANNY_APP_ID || "";
-export const CANNY_BOARD_ID = process.env.REACT_APP_CANNY_BOARD_ID || "";
-export const ROUTES = {
+export const CANNY_APP_ID = import.meta.env.REACT_APP_CANNY_APP_ID || "";
+export const CANNY_BOARD_ID = import.meta.env.REACT_APP_CANNY_BOARD_ID || "";
+
+export const Router = createNavigator({
     home: "/",
-    map: "/map",
+    admin: "/admin",
     fodec: "/fodec",
     pathBuilder: "/path-builder",
     feedback: "/feedback"
-};
+} as const);
 
 export const HEADER_MENU: MenuItem[] = [
     {
         label: "menu.wocker",
-        target: "blank",
+        target: "_blank",
         to: "https://kearisp.github.io/wocker"
     },
     {
         label: "menu.fodec",
-        to: ROUTES.fodec
+        to: Router.url("fodec")
     },
-    // {
-    //     label: "menu.map",
-    //     to: ROUTES.map
-    // },
     {
         label: "menu.path-builder",
-        to: ROUTES.pathBuilder
+        to: Router.url("pathBuilder")
     },
     {
         label: "menu.feedback",
-        to: ROUTES.feedback
+        to: Router.url("feedback")
     }
 ];

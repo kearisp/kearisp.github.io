@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Container, List, ListItem, ListItemText} from "@mui/material";
+import {Container} from "src/views/blocks/Container";
 
 
 const HomePage: React.FC = () => {
@@ -51,8 +51,8 @@ const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <Container>
-            <List>
+        <Container className="py-6">
+            <ul className="flex flex-col">
                 {packages.map((packageName: string, index) => {
                     const {
                         "dist-tags": {
@@ -61,14 +61,15 @@ const HomePage: React.FC = () => {
                     } = mapData[packageName] || {};
 
                     return (
-                        <ListItem key={index}>
-                            <ListItemText
-                              primary={packageName}
-                              secondary={latest} />
-                        </ListItem>
+                        <li
+                          key={index}
+                          className="flex items-center justify-between gap-4 py-2 border-b border-border text-foreground">
+                            <span>{packageName}</span>
+                            <span className="text-muted-foreground text-sm">{latest}</span>
+                        </li>
                     );
                 })}
-            </List>
+            </ul>
         </Container>
     );
 };

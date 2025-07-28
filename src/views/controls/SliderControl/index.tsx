@@ -1,19 +1,16 @@
 import React, {useCallback} from "react";
-import Grid from "@mui/material/Grid";
-import Slider, {SliderProps} from "@mui/material/Slider";
-
 import {useControl, ControlProps} from "src/hooks";
 
 
 type Props = ControlProps<{
-    label?: SliderProps["title"];
-    marks?: SliderProps["marks"];
-    min?: SliderProps["min"];
-    max?: SliderProps["max"];
-    step?: SliderProps["step"];
+    label?: string;
+    marks?: {label?: string; value: number}[];
+    min?: number;
+    max?: number;
+    step?: number;
 }>;
 
-const SliderControl: React.FC<Props> = (props) => {
+export const SliderControl: React.FC<Props> = (props) => {
     const {
         required,
         label,
@@ -26,6 +23,7 @@ const SliderControl: React.FC<Props> = (props) => {
 
     const {
         field: {
+            disabled,
             value = 0,
             onChange
         }
@@ -34,31 +32,36 @@ const SliderControl: React.FC<Props> = (props) => {
         name
     });
 
-    const handleChange = useCallback((e: Event, value: number | number[]) => {
-        onChange(value as number);
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(Number(e.target.value));
     }, [onChange]);
 
     return (
-        <Grid container spacing={1} alignItems="center">
-            <Grid item container width={55} justifyContent="flex-end">
-                <Grid item>
-                    {value.toFixed(2)}
-                </Grid>
-            </Grid>
+        <div className="flex items-center gap-4">
+            <div className="w-14 shrink-0 text-right text-sm text-muted-foreground">
+                {value.toFixed(2)}
+            </div>
 
-            <Grid item xs>
-                <Slider
-                  title={label}
-                  marks={marks}
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={value}
-                  onChange={handleChange} />
-            </Grid>
-        </Grid>
+            <input
+              className="flex-1 accent-primary disabled:opacity-50"
+              type="range"
+              disabled={disabled}
+              name={name}
+              title={label}
+              list={marks ? `${name}-marks` : undefined}
+              min={min}
+              max={max}
+              step={step}
+              value={value}
+              onChange={handleChange} />
+
+            {marks && (
+                <datalist id={`${name}-marks`}>
+                    {marks.map((mark, index) => (
+                        <option key={index} value={mark.value} label={mark.label} />
+                    ))}
+                </datalist>
+            )}
+        </div>
     );
 };
-
-
-export {SliderControl};

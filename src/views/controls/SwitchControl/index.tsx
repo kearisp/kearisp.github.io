@@ -1,43 +1,14 @@
-import React, {useCallback, ChangeEvent} from "react";
-import Switch from "@mui/material/Switch";
+import React from "react";
+import {FormControl, FormControlProps} from "react-compose-form";
+import {SwitchField, SwitchFieldProps} from "src/views/fields/SwitchField";
 
-import {useControl, ControlProps} from "src/hooks";
 
+type SwitchControlProps = FormControlProps<SwitchFieldProps>;
 
-type Props = ControlProps;
-
-const SwitchControl: React.FC<Props> = (props) => {
-    const {
-        required,
-        name
-    } = props;
-
-    const {
-        field: {
-            value = false,
-            disabled,
-            ref,
-            onChange,
-            onBlur
-        }
-    } = useControl({
-        required,
-        name
-    });
-
-    const handleChange = useCallback((e: ChangeEvent, checked: boolean) => {
-        onChange(checked);
-    }, [onChange]);
-
+export const SwitchControl: React.FC<SwitchControlProps> = (props) => {
     return (
-        <Switch
-          ref={ref}
-          disabled={disabled}
-          checked={value}
-          onBlur={onBlur}
-          onChange={handleChange} />
+        <FormControl
+          {...props}
+          as={SwitchField} />
     );
 };
-
-
-export {SwitchControl};

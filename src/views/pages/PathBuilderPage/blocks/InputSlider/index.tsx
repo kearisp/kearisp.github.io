@@ -1,46 +1,67 @@
 import React, {useCallback} from "react";
-import {Grid, Slider, SliderProps} from "@mui/material";
 
 
 type Props = {
-    title?: SliderProps["title"];
-    marks?: SliderProps["marks"];
-    min?: SliderProps["min"];
-    max?: SliderProps["max"];
+    title?: string;
+    marks?: {label?: string; value: number}[];
+    min?: number;
+    max?: number;
     step?: number;
-    defaultValue?: SliderProps["defaultValue"];
+    defaultValue?: number;
     value?: number;
     onChange?: (value: number) => void;
 };
 
 const InputSlider: React.FC<Props> = (props) => {
     const {
+        title,
+        marks,
+        min,
+        max,
+        step,
+        defaultValue,
         value,
         onChange,
         ...rest
     } = props;
 
-    const handleChange = useCallback((e: Event, value: number|number[]) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         if(!onChange) {
             return;
         }
 
-        onChange(value as number);
+        onChange(Number(e.target.value));
     }, [onChange]);
 
     return (
-        <Grid container spacing={2} alignItems="center">
-            <Grid item width={50}>
-                {value}
-            </Grid>
+        <div className="flex items-center gap-4">
+            <div className="w-14 shrink-0 text-right text-sm text-muted-foreground">
+                {(value ?? defaultValue ?? 0).toFixed(2)}
+            </div>
 
-            <Grid item xs>
-                <Slider
+            <div className="flex-1">
+                <input
                   {...rest}
+                  className="w-full accent-primary"
+                  type="range"
+                  title={title}
+                  list={marks ? `${title}-marks` : undefined}
+                  min={min}
+                  max={max}
+                  step={step}
+                  defaultValue={defaultValue}
                   value={value}
                   onChange={handleChange} />
-            </Grid>
-        </Grid>
+
+                {marks && (
+                    <datalist id={`${title}-marks`}>
+                        {marks.map((mark, index) => (
+                            <option key={index} value={mark.value} label={mark.label} />
+                        ))}
+                    </datalist>
+                )}
+            </div>
+        </div>
     );
 };
 

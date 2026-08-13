@@ -19,10 +19,10 @@ import {ConfigContext} from "../ConfigProvider";
 import {Lines} from "../../models/Lines";
 
 
-const PathBuilder: React.FC = () => {
+export const PathBuilder: React.FC = () => {
     const [isLocked, setLocked] = useState(false);
     const rootRef = useRef(null);
-    const sceneRef = useRef<Scene>();
+    const sceneRef = useRef<Scene>(null);
     const config = useContext(ConfigContext);
 
     const handleClick = useCallback(() => {
@@ -570,6 +570,3 @@ const PathBuilder: React.FC = () => {
           onContextMenu={handleContextMenu} />
     );
 };
-
-
-export {PathBuilder};

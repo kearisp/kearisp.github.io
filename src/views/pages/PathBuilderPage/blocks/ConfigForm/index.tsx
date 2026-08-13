@@ -1,6 +1,4 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-
 import {
     ButtonGroupControl,
     SliderControl,
@@ -8,51 +6,41 @@ import {
 } from "src/views/controls";
 
 
-const ConfigForm: React.FC = () => {
+export const ConfigForm: React.FC = () => {
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12}>
-                <ButtonGroupControl
-                  label="Context"
-                  options={[
-                    {label: "SVG", value: "svg"},
-                    {label: "Canvas", value: "canvas"},
-                    {label: "WebGL", value: "webgl"}
-                  ]}
-                  name="context" />
-            </Grid>
+        <div className="flex flex-col gap-4">
+            <ButtonGroupControl
+              label="Context"
+              options={[
+                {label: "SVG", value: "svg"},
+                {label: "Canvas", value: "canvas"},
+                {label: "WebGL", value: "webgl"}
+              ]}
+              name="context" />
 
-            <Grid item xs={12}>
-                <SwitchControl
-                  name="isRunning" />
-            </Grid>
+            <SwitchControl
+              name="isRunning" />
 
-            <Grid item xs={12}>
-                <SliderControl
-                  label="FOV"
-                  min={0}
-                  max={200}
-                  name="fov" />
-            </Grid>
+            <SliderControl
+              label="FOV"
+              min={0}
+              max={200}
+              name="fov" />
 
-            <Grid item xs={12}>
-                <SliderControl
-                  label="Pitch"
-                  min={-90}
-                  max={90}
-                  name="pitch" />
-            </Grid>
+            <SliderControl
+              label="Pitch"
+              min={-90}
+              max={90}
+              name="pitch" />
 
-            <Grid item xs={12}>
-                <SliderControl
-                  label="Yaw"
-                  min={-180}
-                  max={180}
-                  name="yaw" />
-            </Grid>
+            <SliderControl
+              label="Yaw"
+              min={-180}
+              max={180}
+              name="yaw" />
 
-            <Grid container item xs={6} spacing={1}>
-                <Grid item xs={12}>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-4">
                     <SliderControl
                       label="Position X"
                       marks={[
@@ -63,9 +51,7 @@ const ConfigForm: React.FC = () => {
                       min={-100}
                       max={100}
                       name="position.x" />
-                </Grid>
 
-                <Grid item xs={12}>
                     <SliderControl
                       label="Position Y"
                       marks={[
@@ -76,9 +62,7 @@ const ConfigForm: React.FC = () => {
                       min={-100}
                       max={100}
                       name="position.y" />
-                </Grid>
 
-                <Grid item xs={12}>
                     <SliderControl
                       label="Position Z"
                       marks={[
@@ -89,11 +73,9 @@ const ConfigForm: React.FC = () => {
                       min={-100}
                       max={100}
                       name="position.z" />
-                </Grid>
-            </Grid>
+                </div>
 
-            <Grid container item xs={6} spacing={1}>
-                <Grid item xs={12}>
+                <div className="flex flex-col gap-4">
                     <SliderControl
                       label="Direction X"
                       marks={[
@@ -105,9 +87,7 @@ const ConfigForm: React.FC = () => {
                       max={1}
                       step={0.01}
                       name="direction.x" />
-                </Grid>
 
-                <Grid item xs={12}>
                     <SliderControl
                       label="Direction Y"
                       marks={[
@@ -119,9 +99,7 @@ const ConfigForm: React.FC = () => {
                       max={1}
                       step={0.01}
                       name="direction.y" />
-                </Grid>
 
-                <Grid item xs={12}>
                     <SliderControl
                       label="Direction Z"
                       marks={[
@@ -133,11 +111,8 @@ const ConfigForm: React.FC = () => {
                       max={1}
                       step={0.01}
                       name="direction.z" />
-                </Grid>
-            </Grid>
-        </Grid>
+                </div>
+            </div>
+        </div>
     );
 };
-
-
-export {ConfigForm};

@@ -1,33 +1,19 @@
 import React, {ReactNode} from "react";
-import {
-    Container,
-    Grid
-} from "@mui/material";
+import {Container} from "src/views/blocks/Container";
 
 
 type Props = {
     children?: ReactNode;
 };
 
-const DefaultLayout: React.FC<Props> = (props: Props) => {
+export const DefaultLayout: React.FC<Props> = (props: Props) => {
     const {
         children
     } = props;
 
     return (
-        <Grid container
-          direction="column"
-          wrap="nowrap">
-            <Grid item>
-
-            </Grid>
-
-            <Grid item>
-                {children}
-            </Grid>
-        </Grid>
+        <Container>
+            {children}
+        </Container>
     );
 };
-
-
-export {DefaultLayout};

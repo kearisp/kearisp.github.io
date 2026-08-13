@@ -5,5 +5,9 @@
         "feedback": "Feedback",
         "map": "Map",
         "path-builder": "Path builder"
+    },
+    "language": {
+        "ua": "Ukrainian",
+        "en": "English"
     }
 }

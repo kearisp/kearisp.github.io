@@ -16,5 +16,5 @@ i18n.use(Backend).use(initReactI18next).init({
     interpolation: {
         escapeValue: false
     },
-    ns: ["default", "fodec"]
+    ns: ["default", "fodec", "home"]
 });

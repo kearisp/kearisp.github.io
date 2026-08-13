@@ -1,6 +1,7 @@
 import React, {PropsWithChildren} from "react";
 import {Link} from "react-router-dom";
 import {Router} from "src/env";
+import {Logo} from "src/views/blocks/Logo";
 
 
 type HeaderProps = PropsWithChildren<{
@@ -18,7 +19,11 @@ export const Header: React.FC<HeaderProps> = (props) => {
             <div className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-4">
                     <Link className="flex items-center gap-2" to={Router.url("home")}>
-                        <span className="font-bold text-xl text-slate-800 dark:text-white">kearisp</span>
+                        <Logo className="size-9" />
+
+                        <span className="font-bold text-xl text-slate-800 dark:text-white">
+                            Kris Papercut's <span className="font-bold text-amber-500 dark:text-amber-400">Lab</span>
+                        </span>
                     </Link>
                 </div>
 

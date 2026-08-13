@@ -15,19 +15,20 @@
     ],
     "scripts": {
         "start": "concurrently \"npm:watch\" \"npm:watch:*\"",
-        "build-all": "concurrently \"npm:build\" \"npm:build:*\"",
-        "build": "vite build",
+        "build": "concurrently --kill-others-on-fail \"npm:build:*\"",
+        "build:root": "npm run await:motor-js && npm run await:react-canny && npm run await:react-compose-form && vite build",
         "fodec:build": "fodec gen && fodec build",
-        "build:fodec": "npm run build --workspace fodec",
         "build:motor-js": "npm run build --workspace motor-js",
         "build:react-canny": "npm run build --workspace react-canny",
         "build:react-compose-form": "npm run build --workspace react-compose-form",
         "postbuild": "cp build/index.html build/404.html",
         "watch": "vite",
-        "watch:fodec": "npm run watch --workspace fodec",
         "watch:motor-js": "npm run watch --workspace motor-js",
         "watch:react-canny": "npm run watch --workspace react-canny",
         "watch:react-compose-form": "npm run watch --workspace react-compose-form",
+        "await:motor-js": "wait-on ./packages/motor-js/lib/tsconfig.tsbuildinfo",
+        "await:react-canny": "wait-on ./packages/react-canny/lib/tsconfig.tsbuildinfo",
+        "await:react-compose-form": "wait-on ./packages/react-compose-form/lib/tsconfig.tsbuildinfo",
         "test": "concurrently \"npm:test:*\"",
         "test:form": "npm run test --workspace react-compose-form"
     },
@@ -68,7 +69,8 @@
         "sass-embedded": "^1.100.0",
         "tailwindcss": "^4.3.0",
         "typescript": "^5.9.3",
-        "vite": "^8.0.14"
+        "vite": "^8.0.14",
+        "wait-on": "^9.1.0"
     },
     "browserslist": {
         "production": [

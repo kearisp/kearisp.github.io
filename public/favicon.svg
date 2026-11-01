@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="18" x2="0" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="0.45" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="smoke" x1="0" y1="20" x2="0" y2="3" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <path d="M5 19c-3-4.500 5-6.500 2.500-10.500C6 6 8.500 3.500 11 5" stroke="url(#smoke)" stroke-width="2.200" stroke-linecap="round"/>
+  <path d="M34.500 29c6.500 1 9.500-5 6-8.500" stroke="url(#gold)" stroke-width="2.600" stroke-linecap="round"/>
+  <path d="M14 26C10 25 7 22 5.200 19.200 4.700 18.500 3.800 18.800 4 19.600 5.500 25.500 9 31 14.500 33.500Z" fill="url(#gold)"/>
+  <path d="M17 27c0-5 4-7 7-7s7 2 7 7Z" fill="url(#gold)"/>
+  <circle cx="24" cy="18.500" r="1.800" fill="#fde68a"/>
+  <path d="M11 27h24c0 7-4 11.500-12 11.500S11 34 11 27Z" fill="url(#gold)"/>
+  <path d="M19 38.500 17.500 42h13L29 38.500Z" fill="#b45309"/>
+  <path d="M14 29.500c.8 3 2.500 5 5 6" stroke="#fff" stroke-opacity="0.55" stroke-width="1.400" stroke-linecap="round"/>
+  <path d="M40 5q.4 2.600 3 3-2.600.4-3 3-.4-2.600-3-3 2.600-.4 3-3Z" fill="#a78bfa"/>
+  <circle cx="30" cy="8" r="1" fill="#22d3ee"/>
+</svg>

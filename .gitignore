@@ -1,6 +1,7 @@
 /.idea
 /.vscode
 /.eslintcache
+/tmp
 
 # dependencies
 /node_modules

@@ -1,0 +1,69 @@
+{
+    "hero": {
+        "eyebrow": "Welcome, my friend!",
+        "title": "Come closer, look what I've got!",
+        "subtitle": "Forms you can assemble piece by piece: react-compose-form. Feedback widgets that hang themselves on your site: react-canny. And this one, careful, don't touch! That's motor-js, a graphics engine. It's a bit dusty, but it still works.",
+        "primaryCta": "Come, let me show you",
+        "secondaryCta": "GitHub"
+    },
+    "packages": {
+        "eyebrow": "Packages",
+        "title": "What I've got",
+        "subtitle": "Two packages on npm, one on the shelf. Each one has a live demo right here.",
+        "status": {
+            "experiment": "Experiment"
+        },
+        "items": {
+            "motor-js": {
+                "title": "motor-js",
+                "tagline": "A small, dependency-light rendering engine for the web",
+                "description": "motor-js is a lightweight TypeScript rendering engine that draws the same scene through Canvas 2D, SVG, or WebGL — swap backends without rewriting your scene graph. It ships with cameras, geometry primitives, binary space partitioning, and an event system, with gl-matrix as its only dependency. It's an experiment: not on npm, the code is on GitHub and the demo runs right here.",
+                "features": [
+                    "Canvas, SVG and WebGL renderers behind one API",
+                    "Scene graph with cameras, vectors, polygons and basic 3D shapes",
+                    "Only one external dependency (gl-matrix)"
+                ],
+                "demoLabel": "Try the live demo",
+                "githubLabel": "View on GitHub",
+                "npmLabel": "View on npm"
+            },
+            "react-canny": {
+                "title": "react-canny",
+                "tagline": "Canny.io feedback and changelog widgets for React",
+                "description": "react-canny wraps Canny.io's feedback boards and changelog widgets in ready-to-use React components, with built-in support for authenticated user identification (SSO). Drop in a provider, a feedback board, and a changelog bell, and your users can vote on features and see what shipped — without leaving your app.",
+                "features": [
+                    "CannyProvider handles auth/context for you",
+                    "Feedback board and changelog widgets as React components",
+                    "Built-in SSO/user identification helper"
+                ],
+                "demoLabel": "Try the live demo",
+                "githubLabel": "View on GitHub",
+                "npmLabel": "View on npm"
+            },
+            "react-compose-form": {
+                "title": "react-compose-form",
+                "tagline": "Composable form building blocks on top of React Hook Form",
+                "description": "react-compose-form lets you bind any custom component to a form field with a single \"as\" prop, instead of wiring up react-hook-form by hand every time. FormArray gives you repeatable field groups out of the box, and the whole thing is covered by tests and CI.",
+                "features": [
+                    "Bind any component as a form field via FormControl",
+                    "FormArray + useFormArray for repeatable field groups",
+                    "Built on React Hook Form, fully tested"
+                ],
+                "demoLabel": "Try the live demo",
+                "githubLabel": "View on GitHub",
+                "npmLabel": "View on npm"
+            }
+        }
+    },
+    "approach": {
+        "eyebrow": "Approach",
+        "title": "Small tools, used in production",
+        "body": "Every project here follows the same idea: solve one problem, keep the dependency list short, and make it easy to swap out. This isn't a showcase for its own sake: react-compose-form and react-canny run in this site's own demos, while motor-js sits on the shelf, waiting for me to come back."
+    },
+    "cta": {
+        "title": "Wait, my friend, there's more!",
+        "subtitle": "The storeroom is full: old experiments, little trinkets, half-finished ideas. It's all on GitHub, come and have a look. And if you're after something specific, just say the word, maybe I've got it.",
+        "githubLabel": "Peek in the storeroom",
+        "emailLabel": "Whisper in my ear"
+    }
+}

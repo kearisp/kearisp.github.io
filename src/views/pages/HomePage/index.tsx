@@ -1,76 +1,15 @@
-import React, {useState, useEffect} from "react";
-import {Container} from "src/views/blocks/Container";
+import React from "react";
+import {Hero, PackageSection, Approach, Cta} from "./blocks";
 
 
 const HomePage: React.FC = () => {
-    const [packages] = useState([
-        "react-canny",
-        "@kearisp/cli",
-        "@wocker/ws",
-        "@wocker/cron",
-        "@wocker/core",
-        "@wocker/utils",
-        "@wocker/mariadb-plugin",
-        "@wocker/serveo-plugin",
-        "@wocker/cron-plugin",
-        "fodec"
-    ]);
-
-    const [mapData, setMapData] = useState<any>({});
-
-    useEffect(() => {
-        const abortController = new AbortController();
-
-        (async () => {
-            try {
-                for(const packageName of packages) {
-                    const res = await fetch(`https://registry.npmjs.org/${encodeURIComponent(packageName)}`, {
-                        signal: abortController.signal
-                    });
-
-                    if(res.status !== 200) {
-                        continue;
-                    }
-
-                    const data = await res.json();
-
-                    setMapData((mapData) => {
-                        return {
-                            ...mapData,
-                            [packageName]: data
-                        };
-                    });
-                }
-            }
-            catch(err) {
-                //
-            }
-        })();
-
-        return () => abortController.abort();
-    }, []);
-
     return (
-        <Container className="py-6">
-            <ul className="flex flex-col">
-                {packages.map((packageName: string, index) => {
-                    const {
-                        "dist-tags": {
-                            latest = ""
-                        } = {}
-                    } = mapData[packageName] || {};
-
-                    return (
-                        <li
-                          key={index}
-                          className="flex items-center justify-between gap-4 py-2 border-b border-border text-foreground">
-                            <span>{packageName}</span>
-                            <span className="text-muted-foreground text-sm">{latest}</span>
-                        </li>
-                    );
-                })}
-            </ul>
-        </Container>
+        <>
+            <Hero />
+            <PackageSection />
+            <Approach />
+            <Cta />
+        </>
     );
 };
 
